@@ -1,13 +1,13 @@
 package com.gmail.kulacholeg.canon.connect.service;
 
+import com.gmail.kulacholeg.canon.connect.dto.OperationSaveDto;
+import com.gmail.kulacholeg.canon.connect.util.OperationsParser;
 import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,16 +21,15 @@ public class OperationsService {
         template.getMessageConverters().add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
     }
 
-    public String getAllOperations(){
+    public List<OperationSaveDto> getAllOperations(){
         String cookie = this.login();
         String url = "http://192.168.1.205/m_departmentid.html";
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.COOKIE, cookie); // установить заголовок Cookie
         HttpEntity<String> entity = new HttpEntity<>("", headers);
         ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, entity, String.class);
-        System.out.println(response.getBody());
-
-        return response.getBody();
+        List<OperationSaveDto> operationSaveDtos = OperationsParser.parse(response.getBody());
+        return operationSaveDtos;
     }
 
     private String login(){
@@ -52,7 +51,6 @@ public class OperationsService {
         }
         List<String> temp = List.of(result.split(";"));
         result = temp.get(0);
-        System.out.println(result);
         return result;
     }
 }

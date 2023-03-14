@@ -1,10 +1,13 @@
 package com.gmail.kulacholeg.canon.connect.controller;
 
+import com.gmail.kulacholeg.canon.connect.dto.OperationSaveDto;
 import com.gmail.kulacholeg.canon.connect.service.OperationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/operations")
@@ -18,7 +21,7 @@ public class OperationsController {
     }
 
     @GetMapping
-    public String getOperations(){
+    public List<OperationSaveDto> getOperations(){
         return service.getAllOperations();
     }
 }
