@@ -16,5 +16,5 @@ public class OperationSaveDto {
     private Integer scanBW;
     private Integer scanColor;
     private Date date;
-    private Long departmentId;
+    private Integer departmentCode;
 }

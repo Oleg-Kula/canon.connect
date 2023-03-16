@@ -6,6 +6,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,29 +18,37 @@ public class OperationsParser {
     public static List<OperationSaveDto> parse(String html) {
         Document doc = Jsoup.parse(html);
         doc.getElementsByClass("ItemOperation").remove();
-        //Elements fullTable = doc.getElementsByClass("ItemListComponent");
-        Elements table = doc.select("tbody");
+        Elements table = doc.getElementsByClass("ItemListComponent");
+        table = table.select("tbody");
         table.select("colgroup").remove();
         Elements rows = table.select("tr");
 
         List<OperationSaveDto> result = new ArrayList<>();
-        long departmentId = 0L;
+        int departmentCode = 0;
+        LocalDateTime localDateTime = LocalDateTime.now();
+        ZonedDateTime zdt = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
+        long date = zdt.toInstant().toEpochMilli();
 
+        //REFACTOR WITH ITERATOR!!!
+        int i = 0;
         for (Element row : rows) {
             Elements cols = row.select("td");
             if (cols.size() == 6) {
-                departmentId = 7654321L;
+                departmentCode = 7654321;
             } else if (cols.size() == 7) {
-                departmentId = Long.parseLong(cols.get(0).select("a").attr("href")
+                departmentCode = Integer.parseInt(cols.get(0).select("a").attr("href")
                         .replaceAll("\\D+", ""));
             }
+            if (i++ == rows.size()) departmentCode = -1;
+
             OperationSaveDto dto = OperationSaveDto.builder()
-                    .copyBW(Integer.parseInt(cols.get(1).text()))
-                    .printBW(Integer.parseInt(cols.get(2).text()))
-                    .scanBW(Integer.parseInt(cols.get(3).text()))
-                    .scanColor(Integer.parseInt(cols.get(4).text()))
-                    .date(null)
-                    .departmentId(departmentId)
+                    .allOperations(Integer.parseInt(cols.get(1).text()))
+                    .copyBW(Integer.parseInt(cols.get(2).text()))
+                    .printBW(Integer.parseInt(cols.get(3).text()))
+                    .scanBW(Integer.parseInt(cols.get(4).text()))
+                    .scanColor(Integer.parseInt(cols.get(5).text()))
+                    .date(new Date(date))
+                    .departmentCode(departmentCode)
                     .build();
             result.add(dto);
         }
