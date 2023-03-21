@@ -30,7 +30,7 @@ public class OperationsParser {
         long date = zdt.toInstant().toEpochMilli();
 
         //REFACTOR WITH ITERATOR!!!
-        int i = 0;
+        int i = 1;
         for (Element row : rows) {
             Elements cols = row.select("td");
             if (cols.size() == 6) {
