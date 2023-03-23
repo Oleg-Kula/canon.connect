@@ -8,6 +8,8 @@ import com.gmail.kulacholeg.canon.connect.util.OperationsParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -22,10 +24,10 @@ public class SaveOperationsService {
     private final RestTemplate template;
     private final DepartmentRepository departmentRepository;
     private final OperationRepository operationRepository;
-    private String ip = "192.168.1.205";
+    private final String ip = "192.168.1.205";
 
     @Autowired
-    public SaveOperationsService(DepartmentRepository departmentRepository, OperationRepository operationRepository){
+    public SaveOperationsService(DepartmentRepository departmentRepository, OperationRepository operationRepository) {
         this.departmentRepository = departmentRepository;
         this.operationRepository = operationRepository;
         template = new RestTemplate();
@@ -33,8 +35,12 @@ public class SaveOperationsService {
     }
 
     @Scheduled(cron = "0 0 13 * * MON-FRI")
-    @Scheduled(fixedRate = 20000)
-    public void getOperationsAndSave(){
+    @Retryable(
+            maxAttempts = 10,
+            exceptionExpression = "'Connection timed out: connect'.equals(#root.cause.message)",
+            backoff = @Backoff(delay = 1800000)
+    )
+    public void getOperationsAndSave() {
         String cookie = this.login();
         String url = "http://" + ip + "/m_departmentid.html";
         HttpHeaders headers = new HttpHeaders();
@@ -42,12 +48,12 @@ public class SaveOperationsService {
         HttpEntity<String> entity = new HttpEntity<>("", headers);
         ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, entity, String.class);
         List<OperationSaveDto> operationSaveDtos = OperationsParser.parse(response.getBody());
-        for(OperationSaveDto dto : operationSaveDtos){
+        for (OperationSaveDto dto : operationSaveDtos) {
             operationRepository.save(OperationDtoConverter.dtoToEntity(dto, departmentRepository));
         }
     }
 
-    private String login(){
+    private String login() {
         String result = "";
         String url = "http://" + ip + "/tryLogin.cgi";
         String body = "loginM=&0005=7654321&0006=1357246";

@@ -1,17 +1,17 @@
 package com.gmail.kulacholeg.canon.connect.controller;
 
 import com.gmail.kulacholeg.canon.connect.dto.OperationGetDto;
-import com.gmail.kulacholeg.canon.connect.dto.OperationSaveDto;
 import com.gmail.kulacholeg.canon.connect.service.GetOperationsService;
-import com.gmail.kulacholeg.canon.connect.service.SaveOperationsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/operations")
 public class OperationsController {
 
@@ -23,7 +23,8 @@ public class OperationsController {
     }
 
     @GetMapping
-    public List<OperationGetDto> getOperations(){
-        return service.getOperationsPerDate("2023-03-21");
+    public String getOperations(Model model){
+        model.addAttribute("operations", service.getOperationsPerDate("2023-03-23"));
+        return "oper";
     }
 }

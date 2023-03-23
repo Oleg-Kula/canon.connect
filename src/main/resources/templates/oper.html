@@ -1,0 +1,17 @@
+<html>
+<head>
+    <title>Operations</title>
+</head>
+<body>
+<table>
+    <!--<thead>
+    <td><b>Name</b></td>
+    <td><b>Login</b></td>
+    </thead> -->
+        <tr th:each="operation : ${operations}">
+            <td th:text="${operation.getDepartmentName()}"></td>
+            <td th:text="${operation.getAllOperations()}"></td>
+        </tr>
+</table>
+</body>
+</html>
