@@ -1,3 +1,7 @@
+create database canon;
+
+use canon;
+
 insert into departments(department_code, department_name)
 values
 (7654321, 'admin'),
