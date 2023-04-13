@@ -13,6 +13,6 @@ public class OperationGetDto {
     private Integer printBW;
     private Integer scanBW;
     private Integer scanColor;
-    private Date date;
+    //private Date date;
     private String departmentName;
 }

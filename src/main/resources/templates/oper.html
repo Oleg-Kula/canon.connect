@@ -3,13 +3,24 @@
     <title>Operations</title>
 </head>
 <body>
+<a href="/operations">Get operations</a>
+<a href="#">Settings</a>
+<form action="/operations/search" method="get">
+    <input type="date" name="from" value="from" />
+    <input type="date" name="to"  value="to" />
+    <button type="submit">Get operations</button>
+</form>
 <table>
-    <!--<thead>
-    <td><b>Name</b></td>
-    <td><b>Login</b></td>
-    </thead> -->
+    <thead>
+    <td><b>Department</b></td>
+    <td>Print</td>
+    <td>Copy</td>
+    <td><b>All</b></td>
+    </thead>
         <tr th:each="operation : ${operations}">
             <td th:text="${operation.getDepartmentName()}"></td>
+            <td th:text="${operation.getPrintBW()}"></td>
+            <td th:text="${operation.getCopyBW()}"></td>
             <td th:text="${operation.getAllOperations()}"></td>
         </tr>
 </table>

@@ -7,7 +7,6 @@ import java.sql.Date;
 import java.util.List;
 
 public interface OperationRepository extends JpaRepository<OperationEntity, Long> {
-
-    List<OperationEntity> getAllByDate(Date date);
+    List<OperationEntity> getAllByDateBetween(Date from, Date to);
 
 }

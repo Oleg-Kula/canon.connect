@@ -26,7 +26,7 @@ public class OperationDtoConverter {
                 .printBW(entity.getPrintBW())
                 .scanBW(entity.getScanBW())
                 .scanColor(entity.getScanColor())
-                .date(entity.getDate())
+                //.date(entity.getDate())
                 .departmentName(entity.getDepartment().getDepartmentName())
                 .build();
     }
