@@ -1,28 +1,38 @@
-<html>
+<html lang="en">
 <head>
-    <title>Operations</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Canon папір</title>
 </head>
 <body>
-<a href="/operations">Get operations</a>
-<a href="#">Settings</a>
-<form action="/operations/search" method="get">
-    <input type="date" name="from" value="from"/>
-    <input type="date" name="to" value="to"/>
-    <button type="submit">Get operations</button>
+<a href="/operations">Витрати паперу</a>
+<a href="#">Налаштування</a>
+<hr />
+<label for="search-between">Розрахувати витрати паперу за проміжок:</label>
+<form action="/operations/search_between" method="get" id="search-between">
+    <label for="from">Від:</label>
+    <input type="date" name="from" id="from" required/><br />
+
+    <label for="to">До:</label>
+    <input type="date" name="to" id="to" required/><br />
+    <button type="submit">Вивести</button>
+</form>
+<label for="search-day">Або за окремий день:</label>
+<form action="/operations/search_day" method="get" id="search-day">
+    <label for="day">Дата:</label>
+    <input type="date" name="day" id="day" required/><br />
+    <button type="submit">Вивести</button>
 </form>
 <table>
     <thead>
-    <td><b>Department</b></td>
-    <td>Print</td>
-    <td>Copy</td>
-    <td><b>All</b></td>
+    <td><b>Відділ</b></td>
+    <td><b>Всього</b></td>
+    <td>Принтер</td>
+    <td>Копір</td>
     </thead>
     <tr th:each="operation : ${operations}">
         <td th:text="${operation.getDepartmentName()}"></td>
+        <td th:text="${operation.getAllOperations()}"></td>
         <td th:text="${operation.getPrintBW()}"></td>
         <td th:text="${operation.getCopyBW()}"></td>
-        <td th:text="${operation.getAllOperations()}"></td>
     </tr>
 </table>
 </body>

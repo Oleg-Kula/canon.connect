@@ -2,10 +2,10 @@ package com.gmail.kulacholeg.canon.connect.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-
-import java.sql.Date;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Builder
 public class OperationGetDto {
     private Integer allOperations;

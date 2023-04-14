@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping(value = {"/", "/operations"})
+@RequestMapping("/operations")
 public class OperationsController {
 
     private final GetOperationsService service;
@@ -23,11 +23,17 @@ public class OperationsController {
         return "oper";
     }
 
-    @GetMapping("/search")
+    @GetMapping("/search_between")
     public String  getOperationsBetweenDates(@RequestParam String from,
                                              @RequestParam String to,
                                              Model model){
         model.addAttribute("operations", service.getOperationsBetweenDates(from, to));
+        return "oper";
+    }
+
+    @GetMapping("/search_day")
+    public String getOperationsPerDay(@RequestParam String day, Model model){
+        model.addAttribute("operations", service.getOperationsPerDay(day));
         return "oper";
     }
 }
