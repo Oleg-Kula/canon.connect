@@ -1,6 +1,8 @@
 package com.gmail.kulacholeg.canon.connect.service;
 
 import com.gmail.kulacholeg.canon.connect.dto.OperationSaveDto;
+import com.gmail.kulacholeg.canon.connect.entity.DepartmentEntity;
+import com.gmail.kulacholeg.canon.connect.entity.OperationEntity;
 import com.gmail.kulacholeg.canon.connect.repository.DepartmentRepository;
 import com.gmail.kulacholeg.canon.connect.repository.OperationRepository;
 import com.gmail.kulacholeg.canon.connect.util.OperationDtoConverter;
@@ -34,7 +36,7 @@ public class SaveOperationsService {
         template.getMessageConverters().add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
     }
 
-    @Scheduled(cron = "0 0 13 * * MON-FRI")
+    //@Scheduled(cron = "0 0 13 * * MON-FRI")
     @Retryable(
             maxAttempts = 10,
             exceptionExpression = "'Connection timed out: connect'.equals(#root.cause.message)",
@@ -48,8 +50,26 @@ public class SaveOperationsService {
         HttpEntity<String> entity = new HttpEntity<>("", headers);
         ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, entity, String.class);
         List<OperationSaveDto> operationSaveDtos = OperationsParser.parse(response.getBody());
-        for (OperationSaveDto dto : operationSaveDtos) {
-            operationRepository.save(OperationDtoConverter.dtoToEntity(dto, departmentRepository));
+        this.save(operationSaveDtos);
+    }
+
+    private void save(List<OperationSaveDto> operations) {
+        for (OperationSaveDto dto : operations) {
+            OperationEntity entity = OperationDtoConverter.dtoToEntity(dto, departmentRepository);
+            OperationEntity oldEntity = operationRepository.getOperationEntityByDepartmentAndDate(
+                    entity.getDepartment(),
+                    entity.getDate()
+            );
+            if (oldEntity == null) operationRepository.save(entity);
+            else {
+                oldEntity.setAllOperations(entity.getAllOperations());
+                oldEntity.setPrintBW(entity.getPrintBW());
+                oldEntity.setCopyBW(entity.getCopyBW());
+                oldEntity.setScanBW(entity.getScanBW());
+                oldEntity.setScanColor(entity.getScanColor());
+
+                operationRepository.save(oldEntity);
+            }
         }
     }
 

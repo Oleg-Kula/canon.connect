@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping("/operations")
+@RequestMapping(value = {"/", "/operations"})
 public class OperationsController {
 
     private final GetOperationsService service;

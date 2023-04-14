@@ -1,13 +1,14 @@
 <html>
 <head>
     <title>Operations</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 <a href="/operations">Get operations</a>
 <a href="#">Settings</a>
 <form action="/operations/search" method="get">
-    <input type="date" name="from" value="from" />
-    <input type="date" name="to"  value="to" />
+    <input type="date" name="from" value="from"/>
+    <input type="date" name="to" value="to"/>
     <button type="submit">Get operations</button>
 </form>
 <table>
@@ -17,12 +18,12 @@
     <td>Copy</td>
     <td><b>All</b></td>
     </thead>
-        <tr th:each="operation : ${operations}">
-            <td th:text="${operation.getDepartmentName()}"></td>
-            <td th:text="${operation.getPrintBW()}"></td>
-            <td th:text="${operation.getCopyBW()}"></td>
-            <td th:text="${operation.getAllOperations()}"></td>
-        </tr>
+    <tr th:each="operation : ${operations}">
+        <td th:text="${operation.getDepartmentName()}"></td>
+        <td th:text="${operation.getPrintBW()}"></td>
+        <td th:text="${operation.getCopyBW()}"></td>
+        <td th:text="${operation.getAllOperations()}"></td>
+    </tr>
 </table>
 </body>
 </html>
