@@ -37,6 +37,7 @@ public class SaveOperationsService {
     }
 
     //@Scheduled(cron = "0 0 13 * * MON-FRI")
+    @Scheduled(fixedRate = 300000)
     @Retryable(
             maxAttempts = 10,
             exceptionExpression = "'Connection timed out: connect'.equals(#root.cause.message)",

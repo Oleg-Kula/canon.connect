@@ -3,9 +3,7 @@
     <title>Canon папір</title>
 </head>
 <body>
-<a href="/operations">Витрати паперу</a>
-<a href="#">Налаштування</a>
-<hr />
+<div th:insert="~{include/header :: header}" ></div>
 <label for="search-between">Розрахувати витрати паперу за проміжок:</label>
 <form action="/operations/search_between" method="get" id="search-between">
     <label for="from">Від:</label>
