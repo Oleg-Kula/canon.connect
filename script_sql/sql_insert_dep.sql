@@ -2,6 +2,12 @@ create database canon;
 
 use canon;
 
+INSERT INTO operations_properties (property_name, property_value)
+VALUES
+('receiver_email', 'example@ukr.net'),
+('request_time_pattern', '0 0 13 * * MON-FRI'),
+('canon_ip', '192.168.1.205');
+
 insert into departments(department_code, department_name)
 values
 (7654321, 'admin'),

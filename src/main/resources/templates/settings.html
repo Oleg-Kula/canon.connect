@@ -5,6 +5,23 @@
 
 <body>
 <div th:insert="~{include/header :: header}"></div>
+
+<div id="settings-form">
+    <form action="/settings/save" method="get">
+        <label for="canon-ip">IP-адреса МФУ:</label>
+        <input type="text" id="canon-ip" name="canon-ip" th:value="${settings.get('canon_ip')}" required /><br>
+
+        <label for="receiver-email">Пошта отримувача звіту:</label>
+        <input type="text" id="receiver-email" name="receiver-email" th:value="${settings.get('receiver_email')}" required /><br>
+
+        <label for="request-time-pattern">Паттерн часу синхронізації:</label>
+        <input type="text" id="request-time-pattern" name="request-time-pattern" th:value="${settings.get('request_time_pattern')}" readonly /><br>
+
+        <button type="submit">Зберегти</button>
+    </form>
+</div>
+
+</div>
 <a href="operations/upload">Синхронізувати базу витрат</a>
 </body>
 </html>
