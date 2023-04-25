@@ -14,8 +14,7 @@ public class OperationsCalculate {
     public static List<OperationGetDto> calculate(List<OperationEntity> operationEntities){
         return operationEntities.stream()
                 .map(OperationDtoConverter::entityToDto)
-                .collect(Collectors.groupingBy(OperationGetDto::getDepartmentName, TreeMap::new,
-                        Collectors.toList()))
+                .collect(Collectors.groupingBy(OperationGetDto::getDepartmentName, TreeMap::new,Collectors.toList()))
                 .entrySet().stream()
                 .map(entry -> {
                     String departmentName = entry.getKey();

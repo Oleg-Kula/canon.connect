@@ -1,4 +1,4 @@
-create database canon;
+#create database canon;
 
 use canon;
 
