@@ -1,7 +1,10 @@
 package com.gmail.kulacholeg.canon.connect.service;
 
 import com.gmail.kulacholeg.canon.connect.dto.OperationGetDto;
+import com.gmail.kulacholeg.canon.connect.util.PDFCreator;
+import com.itextpdf.text.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -18,8 +21,8 @@ public class MailService {
         this.operationsService = operationsService;
     }
 
-    //@Scheduled(cron = "xxx")
-    public List<OperationGetDto> sendStatistic(){
+    @Scheduled(fixedRate = 999999999)
+    public void sendStatistic(){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         Date start = new Date(calendar.getTimeInMillis());
@@ -28,11 +31,8 @@ public class MailService {
 
         List<OperationGetDto> operations = operationsService.getOperationsBetweenDates(start.toString(), end.toString());
 
-        for(OperationGetDto o : operations){
-            System.out.println(o);
-        }
+        Document pdf = PDFCreator.createFromList(operations);
 
-        return operations;
 
 
     }
