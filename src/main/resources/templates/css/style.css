@@ -65,4 +65,5 @@ td:first-child, th:first-child {
 #header p {
     margin: 0;
     font-size: 16px;
+    color: darkred;
 }
