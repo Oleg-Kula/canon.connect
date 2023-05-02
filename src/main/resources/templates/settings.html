@@ -1,25 +1,30 @@
 <html lang="en">
 <head>
-<title>Налаштування</title>
+    <title>Налаштування</title>
+    <link rel="stylesheet" href="/templates/css/style.css">
 </head>
 
 <body>
-<div th:insert="~{include/header :: header}"></div>
+<div th:insert="~{include/header :: header}" id="header"></div>
 
-<div id="settings-form">
+<div id="form">
     <form action="/settings/save" method="get">
         <label for="canon-ip">IP-адреса МФУ:</label>
-        <input type="text" id="canon-ip" name="canon-ip" th:value="${settings.get('canon_ip')}" required /><br>
+        <input type="text" id="canon-ip" name="canon-ip" th:value="${settings.get('canon_ip')}" required/><br>
 
         <label for="receiver-email">Пошта отримувача звіту:</label>
-        <input type="text" id="receiver-email" name="receiver-email" th:value="${settings.get('receiver_email')}" required /><br>
+        <input type="text" id="receiver-email" name="receiver-email" th:value="${settings.get('receiver_email')}"
+               required/><br>
 
         <label for="request-time-pattern">Паттерн часу синхронізації:</label>
-        <input type="text" id="request-time-pattern" name="request-time-pattern" th:value="${settings.get('request_time_pattern')}" readonly /><br>
+        <input type="text" id="request-time-pattern" name="request-time-pattern"
+               th:value="${settings.get('request_time_pattern')}" readonly/><br>
 
         <button type="submit">Зберегти</button>
     </form>
 </div>
+
+<hr/>
 
 </div>
 <a href="operations/upload">Синхронізувати базу витрат</a>

@@ -1,24 +1,28 @@
 <html lang="en">
 <head>
     <title>Canon папір</title>
+    <link rel="stylesheet" href="/templates/css/style.css">
 </head>
 <body>
-<div th:insert="~{include/header :: header}" ></div>
-<label for="search-between">Розрахувати витрати паперу за проміжок:</label>
-<form action="/operations/search_between" method="get" id="search-between">
-    <label for="from">Від:</label>
-    <input type="date" name="from" id="from" required/><br />
+<div th:insert="~{include/header :: header}" id="header"></div>
+<div id="form">
+    <label for="search-between">Розрахувати витрати паперу за проміжок:</label>
+    <form action="/operations/search_between" method="get" id="search-between">
+        <label for="from">Від:</label>
+        <input type="date" name="from" id="from" required/><br/>
 
-    <label for="to">До:</label>
-    <input type="date" name="to" id="to" required/><br />
-    <button type="submit">Вивести</button>
-</form>
-<label for="search-day">Або за окремий день:</label>
-<form action="/operations/search_day" method="get" id="search-day">
-    <label for="day">Дата:</label>
-    <input type="date" name="day" id="day" required/><br />
-    <button type="submit">Вивести</button>
-</form>
+        <label for="to">До:</label>
+        <input type="date" name="to" id="to" required/><br/>
+        <button type="submit">Вивести</button>
+    </form>
+    <label for="search-day">Або за окремий день:</label>
+    <form action="/operations/search_day" method="get" id="search-day">
+        <label for="day">Дата:</label>
+        <input type="date" name="day" id="day" required/><br/>
+        <button type="submit">Вивести</button>
+    </form>
+</div>
+<hr />
 <table>
     <thead>
     <td><b>Відділ</b></td>
