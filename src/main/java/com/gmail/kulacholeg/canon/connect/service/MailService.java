@@ -29,6 +29,7 @@ public class MailService {
     @Scheduled(fixedRate = 999999999)
     public void sendStatistic(){
         Calendar calendar = Calendar.getInstance();
+        //12312312
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         Date start = new Date(calendar.getTimeInMillis());
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
